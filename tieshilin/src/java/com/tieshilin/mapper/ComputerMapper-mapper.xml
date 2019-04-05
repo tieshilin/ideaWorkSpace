@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tieshilin.mapper.ComputerMapper">
+
+   <!-- 模糊查询公共sql -->
+   <sql id="MoHu">
+   	<where>
+   		<if test="mc!=null">
+   			and c_mc like concat('%',concat(#{mc},'%'))
+   		</if>
+   		<if test="statSssj!=null and statSssj!=''">
+            and c_ssrq &gt;= to_date(#{statSssj}, 'YYYY-MM-DD HH24:MI:SS')
+        </if> 
+       	<!-- 查询条件：创建结束时间 -->
+		<if test="endSssj!=null and endSssj!=''">
+	 		and c_ssrq &lt;= to_date(#{endSssj}, 'YYYY-MM-DD HH24:MI:SS')
+       </if>
+   		<if test="statJg!=null and statJg!=''">
+   			and c_jg &gt;= #{statJg}
+   		</if>
+   		<if test="endJg!=null and endJg!=''">
+   			and c_jg &lt;= #{endJg}
+   		</if>
+   	</where>
+   </sql>
+  <!-- 查询所有总数 -->
+  <select id="countAll" resultType="int">
+   select count(*) from computer
+   <include refid="MoHu"/>
+  </select>
+  
+   <!-- 查询所有并分页 -->
+  <select id="findAll" resultType="com.tieshilin.entity.Computer">
+ 	select c_bh as bh,c_mc as mc,c_js as js,c_jg as jg,c_ssrq as ssrq from computer
+   	<include refid="MoHu"/>
+   	order by c_ssrq desc
+  </select>
+
+</mapper>
