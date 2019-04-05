@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.itbgs.domain.Customer" table="customer">
+		<id name="custId" type="java.lang.String" column="id">
+			<generator class="uuid"></generator>
+		</id>
+		<property name="custName" type="java.lang.String" column="name"></property>
+		<property name="address" type="java.lang.String" column="address"></property>
+	</class>
+</hibernate-mapping>
